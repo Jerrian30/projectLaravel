@@ -1,0 +1,56 @@
+/* style.css */
+
+/* Style the form container */
+.form-container {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  h4.tambah-buku {
+  font-size: 24px; /* Ukuran font */
+  color: #333; /* Warna teks */
+  text-transform: uppercase; /* Mengubah teks menjadi huruf kapital */
+  margin-bottom: 20px; /* Ruang bawah sebelum elemen berikutnya */
+}
+  
+  /* Style form elements */
+  .form-group {
+    margin: 10px 0;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Style error messages */
+  .error-message {
+    color: #ff0000;
+    font-size: 12px;
+  }
+  
+  /* Style the submit button */
+  .submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a049;
+  }
+  
