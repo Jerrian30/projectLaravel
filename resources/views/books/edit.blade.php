@@ -1,47 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Buku</title>
-    <link rel="stylesheet" href="{{ asset('css/edit.css') }}">
-</head>
-<body>
-    
-<form class="book-form" action="{{ route('books.update', $book->id) }}" method="POST">
-    @csrf
-    @method('PUT')
 
-    <div class="form-group">
-        <label for="title" class="form-label">Judul buku:</label>
-        <input type="text" name="title" id="title" class="form-input" value="{{ old('title', $book->title) }}" />
-        @error('title')
-            <p class="error-message">{{ $message }}</p>
-        @enderror
-    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <h1 class="subheader">Edit Buku</h1>
 
-    <div class="form-group">
-        <label for="author" class="form-label">Penulis:</label>
-        <input type="text" name="author" id="author" class="form-input" value="{{ old('author', $book->author) }}" />
-        @error('author')
-            <p class="error-message">{{ $message }}</p>
-        @enderror
-    </div>
+                <a href="{{ route('books.show', $book) }}" class="btn btn-primary btn-rounded btn-sm btn-30">Kembali</a>
+            </div>
 
-    <div class="form-group">
-        <label for="description" class="form-label">Deskripsi:</label>
-        <textarea name="description" id="description" class="form-textarea">{{ old('description', $book->description) }}</textarea>
-        @error('description')
-            <p class="error-message">{{ $message }}</p>
-        @enderror
-    </div>
+            <form action="{{ route('books.update', $book) }}" method="post">
+                @csrf
+                @method('PUT')
 
-    <div class="form-group">
-        <input type="submit" value="Simpan" class="form-submit">
-    </div>
-</form>
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h4 class="semibold">Data Buku</h4>
 
-    
-</body>
-</html>
+                        <div class="form-group mb-3">
+                            <label for="title" class="mb-2">Judul</label>
+                            <input type="text" name="title" value="{{ old('title', $book->title) }}" id="title"
+                                class="form-control form-control-lg @error('title') is-invalid @enderror"
+                                required="required">
+
+                            @error('title')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="author" class="mb-2">Penulis</label>
+                            <select name="author_id" id="author" class="form-control form-control-lg">
+                                <option selected disabled>Pilih Penulis</option>
+                                @foreach ($authors as $author)
+                                    <option value="{{ $author->id }}" @if (old('author_id', $book->author_id)) selected @endif>
+                                        {{ $author->name }}</option>
+                                @endforeach
+                            </select>
+
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description" class="mb-2">Deskripsi</label>
+                            <textarea name="description" id="description"
+                                class="form-control form-control-lg @error('description') is-invalid @endif">{{ old('description', $book->description) }}</textarea>
+
+                            @error('description')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="card-footer
+                                d-flex justify-content-end">
+                            <input type="submit" value="Simpan" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+

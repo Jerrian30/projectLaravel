@@ -5,82 +5,89 @@ namespace App\Http\Controllers;
 use App\Models\Author;
 use Illuminate\Http\Request;
 
-class authorController extends Controller
+class AuthorController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $authors = Author::all();
+        $authors = Author::orderBy('name')->paginate();
 
         return view('authors.index', compact('authors'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         return view('authors.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        //1. validasi
         $request->validate([
-            'author' => 'required|max:255',
-            'email' => 'required|max:255|unique:authors,email',
-            'address' => 'nullable',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|min:12|max:255|email|unique:authors,email',
+            'address' => 'nullable|max:255'
         ]);
 
-        //2. masukan data ke database
-        $author = new Author();
+        Author::create($request->all());
 
-        $author->author = $request->author;
-        $author->email = $request->email;
-        $author->address = $request->address;
-
-        $author->save();
-
-        //3. redirect
         return redirect()
             ->route('authors.index')
-            ->with('pesan', 'Data berhasil disimpan');
+            ->with('success', 'Berhasil menambah data penulis baru');
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(Author $author)
     {
+        $author->loadCount('books');
+        
         return view('authors.show', compact('author'));
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Author $author)
     {
         return view('authors.edit', compact('author'));
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Author $author)
     {
-        //1. validasi
         $request->validate([
-            'author' => 'required|max:255'. $author->id,
-            'email' => 'required|max:255',
-            'address' => 'nullable',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|min:12|max:255|email|unique:authors,email,' . $author->id,
+            'address' => 'nullable|max:255'
         ]);
 
-        //2. update
-        $author->author = $request->author;
-        $author->email = $request->email;
-        $author->address = $request->address;
+        $author->update($request->all());
 
-        $author->save();
-
-        //3. redirect
         return redirect()
-            ->route('authors.index')
-            ->with('pesan', 'Data berhasil diupdate');
+            ->route('authors.show', $author)
+            ->with('success', 'Berhasil memperbarui data penulis');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Author $author)
     {
         $author->delete();
 
         return redirect()
             ->route('authors.index')
-            ->with('pesan', 'Data berhasil dihapus');
+            ->with('success', 'Berhasil menghapus data penulis');
     }
 }

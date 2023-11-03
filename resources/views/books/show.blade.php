@@ -1,27 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Buku</title>
-    <link rel="stylesheet" href="{{ asset('css/show.css') }}">
-</head>
-<body>
-    <h1>DATA BUKU</h1>
 
-<div class="book-info">
-    <div class="book-field">
-        <strong>Judul:</strong> {{ $book->title }}
-    </div>
-    <div class="book-field">
-        <strong>Penulis:</strong> {{ $book->author }}
-    </div>
-    <div class="book-field">
-        <strong>Deskripsi:</strong> {{ $book->description }}
-    </div>
-</div>
-    
-</body>
-</html>
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <h1 class="subheader">Data Buku</h1>
 
+                <a href="{{ route('books.index') }}" class="btn btn-primary btn-rounded btn-sm btn-30">Kembali</a>
+            </div>
+
+            <div class="card mt-3">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tr>
+                            <td>Judul</td>
+                            <td><span class="font-weight-bold">{{ $book->title }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Penulis</td>
+                            <td><span class="font-weight-bold">{{ $book->author->name }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Deskripsi</td>
+                            <td><span class="font-weight-bold">{{ $book->description }}</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-footer d-flex justify-content-end gap-1">
+                    <a href="{{ route('books.edit', $book) }}" class="btn btn-warning btn-rounded btn-sm">Edit</a>
+                    <a href="#" class="btn btn-danger btn-sm btn-rounded btn-delete">Hapus</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section('custom_html')
+    <form action="{{ route('books.destroy', $book) }}" method="post" id="delete-form">
+        @csrf
+        @method('DELETE')
+    </form>
+@endsection
+
+@push('custom_js')
+    <script>
+        let btnDelete = document.querySelector('.btn-delete');
+        let deleteForm = document.querySelector('#delete-form');
+
+        btnDelete.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteForm.submit();
+                }
+            })
+        });
+    </script>
+@endpush

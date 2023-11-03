@@ -1,44 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TAMBAH PENULIS</title>  
-    <link rel="stylesheet" href="{{ asset('css/create.css') }}">
-</head>
-<body>
-    <h4 class="tambah buku">TAMBAH PENULIS</h4>
-    <form action="{{ route('authors.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="author">Penulis</label>
-            <input type="text" name="author" id="author" value="{{ old('author') }}">
 
-            @error('author')
-                <p>{{ $message }}</p>
-            @enderror
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <h1 class="subheader">Tambah Penulis</h1>
+
+                <a href="{{ route('authors.index') }}" class="btn btn-primary btn-rounded btn-sm btn-30">Kembali</a>
+            </div>
+
+            <form action="{{ route('authors.store') }}" method="post">
+                @csrf
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h4 class="semibold">Data Penulis</h4>
+
+                        <div class="form-group mb-3">
+                            <label for="name" class="mb-2">Nama</label>
+                            <input type="text" name="name" value="{{ old('name') }}" id="name"
+                                class="form-control form-control-lg @error('name') is-invalid @enderror"
+                                required="required">
+
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="email" class="mb-2">Email</label>
+                            <input type="email" name="email" value="{{ old('email') }}" id="email"
+                                class="form-control form-control-lg @error('email') is-invalid @enderror"
+                                required="required">
+
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address" class="mb-2">Alamat</label>
+                            <textarea name="address" id="address" class="form-control form-control-lg @error('address') is-invalid @endif">{{ old('address') }}</textarea>
+
+                            @error('address')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <input type="submit" value="Tambah" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" value="{{ old('email') }}">
+    </div>
 
-            @error('email')
-                <p>{{ $message }}</p>
-            @enderror
-        </div>
-        <div class="form-group">
-            <label for="address">Alamat</label>
-            <input type="text" name="address" id="address" value="{{ old('address') }}">
-
-            @error('address')
-                <p>{{ $message }}</p>
-            @enderror
-        </div>
-
-        <input type="submit" value="Simpan" class="submit-button">
-
-    </form>
-    
-</body>
-</html>

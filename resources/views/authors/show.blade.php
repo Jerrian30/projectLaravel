@@ -1,27 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Buku</title>
-    <link rel="stylesheet" href="{{ asset('css/show.css') }}">
-</head>
-<body>
-    <h1>DATA PENULIS</h1>
 
-<div class="book-info">
-    <div class="book-field">
-        <strong>Judul:</strong> {{ $author->author }}
-    </div>
-    <div class="book-field">
-        <strong>Penulis:</strong> {{ $author->email }}
-    </div>
-    <div class="book-field">
-        <strong>Deskripsi:</strong> {{ $author->address }}
-    </div>
-</div>
-    
-</body>
-</html>
 
+
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <h1 class="subheader">Data Penulis</h1>
+
+                <a href="{{ route('authors.index') }}" class="btn btn-primary btn-rounded btn-sm btn-30">Kembali</a>
+            </div>
+
+            <div class="card mt-3">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tr>
+                            <td>Nama</td>
+                            <td><span class="font-weight-bold">{{ $author->name }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><span class="font-weight-bold">{{ $author->email }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Alamat</td>
+                            <td><span class="font-weight-bold">{{ $author->address }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Jumlah Buku</td>
+                            <td><span class="font-weight-bold">{{ $author->books_count }}</span></td>
+                        </tr>
+                    </table>
+                </div>
+              

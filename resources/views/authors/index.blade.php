@@ -1,51 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DAFTAR PENULIS</title>
-    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
-</head>
-<body>
-<center></center>
-    <h2>DAFTAR PENULIS</h2>
-    <a href="{{ route('authors.create') }}" class="create-link">+Tambah</a>
-      @if (session()->has('pesan'))
-            <div style="color: green;">
-                {{ session()->get('pesan') }}
-            </div>
-            <br>
-        @endif
-    <table border="1" cellpadding="10" cellspacing="0">
-        <thead>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Email</th>
-            <th>Alamat</th>
-            <th>Aksi</th>
-        </thead>
-        <?php $i = 1?>
-        @foreach ($authors as $author )
-        <tr>
-            <td>{{ $i }}</td>
-            <td>{{ $author->author }}</td>
-            <td>{{ $author->email }}</td>
-            <td>{{ $author->address }}</td>
-            <td class="action-buttons">
-                <a href="{{ route('authors.edit', $author->id) }}" class="button edit-button">Edit</a>
-                <form action="{{ route('authors.destroy', $author->id) }}" method="post" class="delete-form">
-                    @csrf
-                    @method('DELETE')
-                    <input type="submit" value="Hapus" onclick="return confirm('Yakin ingin menghapus penulis {{ $author->author }}?')" class="button delete-button">
-                </form>
-                <a href="{{ route('authors.show', $author->id) }}" class="button show-button">Show</a>
-            </td>
-        </tr>
-        <?php $i++?>
-        @endforeach
 
-    </table>
-    <script src="{{ asset('js/index.js') }}"></script>
-</body>
-</html>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <h1 class="subheader">Kelola Penulis</h1>
+
+                <a href="{{ route('authors.create') }}" class="btn btn-primary btn-rounded btn-sm btn-30"><i
+                        class="fa fa-plus"></i> Tambah</a>
+            </div>
+
+            <div class="card mt-3">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Alamat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($authors as $author)
+                                <tr>
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{ $author->name }}</td>
+                                    <td>{{ $author->email }}</td>
+                                    <td>{{ $author->address }}</td>
+                                    <td class="text-end">
+                                        <a href="{{ route('authors.show', $author) }}"
+                                            class="btn btn-sm btn-success btn-rounded">Lihat</a>
+                                        <a href="{{ route('authors.edit', $author) }}"
+                                            class="btn btn-sm btn-warning btn-rounded">Edit</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    {{ $authors->links() }}
+                </div>
+            </div>
+        </div>
+    </div>
+ 
